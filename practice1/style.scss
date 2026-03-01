@@ -1,0 +1,42 @@
+$accent: #dc4a4a;
+$secondary: #ffffff;
+$theme: dark;
+$border-radius: 8px;
+
+@mixin text($color) {
+    font-size: 15px;
+    color: $secondary;
+    text-decoration: none;
+}
+
+@mixin center-page__card {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.card {
+    padding: 16px;
+
+    @if $theme == dark {
+        background: #222;
+        color: white;
+    }
+    &__title {
+        font-size: 20px;
+    }
+
+    &--accent {
+        border: 2px solid $accent;
+    }
+    img {
+        border-radius: $border-radius;
+    }
+
+    @include center-page__card();
+}
+
+p {
+    @include text($secondary);
+}

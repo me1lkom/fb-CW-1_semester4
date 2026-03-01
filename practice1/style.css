@@ -1,0 +1,28 @@
+.card {
+  padding: 16px;
+  background: #222;
+  color: white;
+}
+.card__title {
+  font-size: 20px;
+}
+.card--accent {
+  border: 2px solid #dc4a4a;
+}
+.card img {
+  border-radius: 8px;
+}
+.card {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+}
+
+p {
+  font-size: 15px;
+  color: #ffffff;
+  text-decoration: none;
+}
+
+/*# sourceMappingURL=style.css.map */
