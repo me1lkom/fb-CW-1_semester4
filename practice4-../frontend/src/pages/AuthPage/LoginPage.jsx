@@ -27,14 +27,10 @@ export default function LoginPage() {
     try {
       const data = await api.login(formData);
       
-      // const response = await api.login(formData);
-      // const { accessToken, refreshToken } = response.data;
-      
-      // Сохраняем токены
       localStorage.setItem('accessToken', data.accessToken);
       localStorage.setItem('refreshToken', data.refreshToken);
+      localStorage.setItem('userRole', data.role);
       
-      // Перенаправляем на страницу с товарами
       navigate('/products');
     } catch (err) {
       console.error('Login error:', err);

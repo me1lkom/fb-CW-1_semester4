@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { Link } from 'react-router-dom';
 import { api } from '../../api';
 
 export default function Header() {
@@ -29,6 +30,7 @@ export default function Header() {
     window.location.href = '/login';
   };
 
+
   if (loading) {
     return (
       <header className="header">
@@ -45,6 +47,9 @@ export default function Header() {
         <a href="/" className="brand">Мой Магазин</a>
         
         <nav className="header__nav">
+          {user && user.role === 'admin' && (
+              <Link to="/userpanel" className="btn btn--panel">Палень пользователей</Link>
+          )}
           <button onClick={handleLogout} className="btn btn--primary">
             Выйти
           </button>

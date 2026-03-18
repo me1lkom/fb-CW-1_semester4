@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import "./ProductsPage.scss";
-import ProductsList from "../../components/ProductsList/ProductsList";
-import ProductModal from "../../components/ProductModal/ProductModal";
+import ProductsList from "../../components/Products/ProductsList";
+import ProductModal from "../../components/Products/ProductModal";
 import { api } from "../../api";
 import Header from "../../components/Static/Header";
 import Footer from "../../components/Static/Footer";

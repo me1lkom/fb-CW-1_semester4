@@ -3,6 +3,7 @@ import ProductsPage from "./pages/ProductsPage/ProductsPage";
 import LoginPage from "./pages/AuthPage/LoginPage";
 import RegisterPage from "./pages/AuthPage/RegisterPage";
 import ProtectedRoute from "./components/ProtectedRoute";
+import UserPanelPage from "./pages/AdminPage/UserPanelPage";
 
 function App() {
   return (
@@ -21,6 +22,14 @@ function App() {
             }
           />
 
+          <Route 
+            path='/userpanel'
+            element={
+              <ProtectedRoute>
+                <UserPanelPage />
+              </ProtectedRoute>
+            }
+          />
           <Route path="/" element={<Navigate to="/products" replace />} />
         </Routes>
       </div>

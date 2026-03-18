@@ -34,28 +34,47 @@ $dangerBg: rgba(239, 68, 68, 0.12);
 }
 
 .header {
-    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
-    background: rgba(255, 255, 255, 0.02);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  background: rgba(255, 255, 255, 0.02);
 
-    &__inner {
-        @include container();
-        padding: 14px 16px;
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-    }
+  &__inner {
+    @include container();
+    padding: 14px 16px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
 
-    &__right {
-        opacity: 0.75;
-        font-size: 13px;
+  &__nav {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    
+    .role-badge {
+      background: $primaryBg;
+      border: 1px solid $primary;
+      padding: 6px 12px;
+      border-radius: 20px;
+      font-size: 13px;
+      color: $text;
     }
+    
+    .btn--primary {
+      // стили кнопки
+    }
+  }
+
+  &__right {
+    opacity: 0.75;
+    font-size: 13px;
+  }
 }
 
 .brand {
-    font-weight: 700;
-    letter-spacing: 0.3px;
-    text-decoration: none;
-    color: $text;
+  font-weight: 700;
+  letter-spacing: 0.3px;
+  text-decoration: none;
+  color: $text;
 }
 
 .main {
@@ -89,6 +108,7 @@ $dangerBg: rgba(239, 68, 68, 0.12);
     background: transparent;
     color: inherit;
     cursor: pointer;
+    font-size: 14px;
 
     &--primary {
         background: $primaryBg;
@@ -98,6 +118,12 @@ $dangerBg: rgba(239, 68, 68, 0.12);
     &--danger {
         background: $dangerBg;
         border: 1px solid $danger;
+    }
+    &--panel {
+        text-decoration: none;
+        color: $text;
+        background: $primaryBg;
+        border: 1px solid $primary;
     }
 }
 
@@ -129,10 +155,10 @@ $dangerBg: rgba(239, 68, 68, 0.12);
 
 .imagePreview img {
     height: 150px;
-        border-radius: 8px;
+    border-radius: 8px;
 }
 
-.productPhoto{
+.productPhoto {
     display: flex;
     justify-content: center;
 }

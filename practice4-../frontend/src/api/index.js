@@ -122,12 +122,31 @@ export const api = {
   },
   
   updateProduct: async (id, product) => {
-    const response = await apiClient.patch(`/products/${id}`, product);
+    const response = await apiClient.put(`/products/${id}`, product);
     return response.data;
   },
   
   deleteProduct: async (id) => {
     const response = await apiClient.delete(`/products/${id}`);
     return response.data;
-  }
+  },
+
+  // Users
+  getUsers: async () => {
+    const response = await apiClient.get("/users");
+    return response.data;
+  },
+  getUsersById: async (id) => {
+    const response = await apiClient.get(`/users/${id}`);
+    return response.data;
+  },
+  updateUser: async (id, user) => {
+    const response = await apiClient.put(`/users/${id}`, user);
+    return response.data;
+  },
+  
+  deleteUser: async (id) => {
+    const response = await apiClient.delete(`/users/${id}`);
+    return response.data;
+  },
 };
