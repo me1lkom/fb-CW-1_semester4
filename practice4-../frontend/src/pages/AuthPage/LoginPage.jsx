@@ -96,5 +96,3 @@ export default function LoginPage() {
     </div>
   );
 };
-
-// export default LoginPage;

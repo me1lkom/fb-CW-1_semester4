@@ -132,14 +132,12 @@ ${res.statusCode} ${req.path}`);
     }
   );
 
-  console.log("✅ Тестовые пользователи добавлены");
+  console.log("Тестовые пользователи добавлены");
 })();
 
 
 
 
-
-// Настройка CORS (разрешаем запросы с фронтенда)
 app.use(cors({
   origin: "http://localhost:3001",
   methods: ["GET", "POST", "PATCH", "DELETE", "PUT"],
@@ -161,7 +159,7 @@ function authMiddleware(req, res, next) {
 
   try {
     const decoded = jwt.verify(token, JWT_SECRET);
-    req.user = decoded; // { sub: userId, email: user.email, iat, exp }
+    req.user = decoded;
     next();
   } catch (err) {
     return res.status(401).json({ error: 'Invalid or expired token' });
@@ -176,7 +174,6 @@ function roleMiddleware(allowedRoles) {
 
     const userRole = req.user.role;
 
-    // Иерархия: admin имеет права seller, seller имеет права user
     const roleHierarchy = {
       admin: 3,
       seller: 2,
@@ -184,12 +181,10 @@ function roleMiddleware(allowedRoles) {
       guest: 0
     };
 
-    // Получаем максимальный уровень из разрешённых ролей
     const maxAllowedLevel = Math.max(
       ...allowedRoles.map(role => roleHierarchy[role] || 0)
     );
 
-    // Если уровень пользователя >= максимального разрешённого — пропускаем
     if (roleHierarchy[userRole] >= maxAllowedLevel) {
       return next();
     }
@@ -292,8 +287,6 @@ app.post("/api/auth/register", async (req, res) => {
     role: newUser.role,
   });
 });
-
-
 
 /**
  * @swagger
@@ -495,8 +488,6 @@ app.post("/api/auth/refresh", (req, res) => {
   }
 
 });
-
-
 
 /**
  * @swagger
@@ -773,8 +764,6 @@ let products = [
   }
 ];
 
-
-
 /**
  * @swagger
  * components:
@@ -844,13 +833,6 @@ let products = [
  *           example: "Product not found"
  */
 
-
-
-
-
-
-
-// Функция-помощник для поиска товара
 function findProductOr404(id, res) {
   const product = products.find(p => p.id == id);
   if (!product) {
@@ -860,8 +842,6 @@ function findProductOr404(id, res) {
   return product;
 }
 
-
-// CRUD операции для товаров
 
 /**
  * @swagger
@@ -879,7 +859,6 @@ function findProductOr404(id, res) {
  *               items:
  *                 $ref: '#/components/schemas/Product'
  */
-// GET /api/products - получить все товары
 app.get("/api/products", (req, res) => {
   res.json(products);
 });
@@ -914,7 +893,6 @@ app.get("/api/products", (req, res) => {
  *             schema:
  *               $ref: '#/components/schemas/Error'
  */
-// GET /api/products/:id - получить товар по ID
 app.get("/api/products/:id", authMiddleware, (req, res) => {
   const id = req.params.id;
   const product = findProductOr404(id, res);
@@ -977,7 +955,6 @@ app.get("/api/products/:id", authMiddleware, (req, res) => {
  *             schema:
  *               $ref: '#/components/schemas/Error'
  */
-// POST /api/products - создать новый товар
 app.post("/api/products", authMiddleware, roleMiddleware(["seller"]), (req, res) => {
   const { name, category, description, price, stock, imageUrl } = req.body;
 
@@ -1051,7 +1028,6 @@ app.post("/api/products", authMiddleware, roleMiddleware(["seller"]), (req, res)
  *       404:
  *         description: Товар не найден
  */
-// PUT /api/products/:id - обновить товар
 app.put("/api/products/:id", authMiddleware, roleMiddleware(["seller"]), (req, res) => {
   const id = req.params.id;
   const product = findProductOr404(id, res);
@@ -1099,7 +1075,6 @@ app.put("/api/products/:id", authMiddleware, roleMiddleware(["seller"]), (req, r
  *             schema:
  *               $ref: '#/components/schemas/Error'
  */
-// DELETE /api/products/:id - удалить товар
 app.delete("/api/products/:id", authMiddleware, roleMiddleware(["admin"]), (req, res) => {
   const id = req.params.id;
   const product = findProductOr404(id, res);
@@ -1110,18 +1085,15 @@ app.delete("/api/products/:id", authMiddleware, roleMiddleware(["admin"]), (req,
   res.status(204).send();
 });
 
-// 404 для всех остальных маршрутов
 app.use((req, res) => {
   res.status(404).json({ error: "Not found" });
 });
 
-// Глобальный обработчик ошибок
 app.use((err, req, res, next) => {
   console.error("Unhandled error:", err);
   res.status(500).json({ error: "Internal server error" });
 });
 
-// Запуск сервера
 app.listen(port, () => {
   console.log(`Сервер запущен на http://localhost:${port}`);
   console.log(`Swagger UI доступен по адресу http://localhost:${port}/api-docs`);

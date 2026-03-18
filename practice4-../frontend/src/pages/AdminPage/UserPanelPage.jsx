@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from "react";
-// import "./ProductsPage.scss";
 import UserList from "../../components/Admin/UserList";
 import UserModal from "../../components/Admin/UserModal";
 import { api } from "../../api";
