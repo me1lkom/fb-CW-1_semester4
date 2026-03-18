@@ -11,10 +11,10 @@ const port = 3000;
 
 const jwt = require('jsonwebtoken');
 const JWT_SECRET = 'access_secret';
-const ACCESS_EXPIRES_IN = '15m';
+const ACCESS_EXPIRES_IN = '1m';
 
 const REFRESH_SECRET = 'refresh_secret';
-const REFRESH_EXPIRES_IN = '7d';
+const REFRESH_EXPIRES_IN = '5d';
 
 const refreshTokens = new Set();
 

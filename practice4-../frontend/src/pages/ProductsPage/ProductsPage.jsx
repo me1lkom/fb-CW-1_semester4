@@ -3,6 +3,8 @@ import "./ProductsPage.scss";
 import ProductsList from "../../components/ProductsList/ProductsList";
 import ProductModal from "../../components/ProductModal/ProductModal";
 import { api } from "../../api";
+import Header from "../../components/Static/Header";
+import Footer from "../../components/Static/Footer";
 
 export default function ProductsPage() {
   const [products, setProducts] = useState([]);
@@ -78,11 +80,8 @@ export default function ProductsPage() {
 
   return (
     <div className="page">
-      <header className="header">
-        <div className="header__inner">
-          <div className="brand">Мой Магазин</div>
-        </div>
-      </header>
+      
+      <Header />
       
       <main className="main">
         <div className="container">
@@ -105,12 +104,8 @@ export default function ProductsPage() {
         </div>
       </main>
       
-      <footer className="footer">
-        <div className="footer__inner">
-          © {new Date().getFullYear()} Мой Магазин
-        </div>
-      </footer>
-      
+      <Footer />
+
       <ProductModal
         open={modalOpen}
         mode={modalMode}
