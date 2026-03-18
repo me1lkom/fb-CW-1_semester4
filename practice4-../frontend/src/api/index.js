@@ -19,48 +19,6 @@ apiClient.interceptors.request.use(
   (error) => Promise.reject(error)
 );
 
-// apiClient.interceptors.response.use(
-//   (response) => response,
-//   async (error) => {
-//     const originalRequest = error.config;
-
-//     // Если 401 и это не повторный запрос
-//     if (error.response?.status === 401 && !originalRequest._retry) {
-//       originalRequest._retry = true;
-
-//       try {
-//         const refreshToken = localStorage.getItem('refreshToken');
-//         if (!refreshToken) throw new Error('No refresh token');
-
-//         // Запрос на обновление пары токенов
-//         const response = await axios.post('http://localhost:3000/api/auth/refresh', {
-//           refreshToken
-//         });
-
-//         const { accessToken, refreshToken: newRefreshToken } = response.data;
-
-//         // Сохраняем новые токены
-//         localStorage.setItem('accessToken', accessToken);
-//         localStorage.setItem('refreshToken', newRefreshToken);
-
-//         // Повторяем исходный запрос с новым токеном
-//         originalRequest.headers.Authorization = `Bearer ${accessToken}`;
-//         return apiClient(originalRequest);
-//       } catch (refreshError) {
-//         // Если refresh не работает — чистим всё и кидаем на логин
-//         localStorage.removeItem('accessToken');
-//         localStorage.removeItem('refreshToken');
-//         window.location.href = '/login';
-//         return Promise.reject(refreshError);
-//       }
-//     }
-
-//     return Promise.reject(error);
-//   }
-// );
-
-
-// Добавь в начало файла (после импортов)
 let isRefreshing = false;
 let failedQueue = [];
 
