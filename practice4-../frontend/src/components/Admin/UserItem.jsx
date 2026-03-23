@@ -30,9 +30,8 @@ export default function UserItem({ user, onEdit, onDelete }) {
       <div className="productMain">
         <div className="productId">#{user.id}</div>
         <div className="productName">{user.email}</div>
-        <div className="productCategory">{user.first_name}</div>
-        <div className="productPrice">{user.last_name} ₽</div>
-        <div className="productStock">{user.role}</div>
+        <div className="productPrice">{user.first_name} {user.last_name}</div>
+        <div className="productCategory">{user.role}</div>
       </div>
       <div className="productActions">
         

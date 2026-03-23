@@ -110,7 +110,7 @@ ${res.statusCode} ${req.path}`);
       id: nanoid(6),
       email: "admin@test.com",
       first_name: "Admin",
-      last_name: "Test",
+      last_name: "Test_last_name",
       role: "admin",
       hashedPassword: adminPass
     },
@@ -118,7 +118,7 @@ ${res.statusCode} ${req.path}`);
       id: nanoid(6),
       email: "seller@test.com",
       first_name: "Seller",
-      last_name: "Test",
+      last_name: "Test_last_name",
       role: "seller",
       hashedPassword: sellerPass
     },
@@ -126,7 +126,7 @@ ${res.statusCode} ${req.path}`);
       id: nanoid(6),
       email: "user@test.com",
       first_name: "User",
-      last_name: "Test",
+      last_name: "Test_last_name",
       role: "user",
       hashedPassword: userPass
     }
