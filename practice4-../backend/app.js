@@ -14,7 +14,7 @@ const JWT_SECRET = 'access_secret';
 const ACCESS_EXPIRES_IN = '15m';
 
 const REFRESH_SECRET = 'refresh_secret';
-const REFRESH_EXPIRES_IN = '7d';
+const REFRESH_EXPIRES_IN = '1d';
 
 const refreshTokens = new Set();
 
