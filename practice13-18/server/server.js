@@ -49,31 +49,39 @@ io.on('connection', (socket) => {
     });
 
     // Обработка newReminder
+    // Обработка newReminder
     socket.on('newReminder', (reminder) => {
-    console.log('newReminder получена:', reminder);
-    const { id, text, reminderTime } = reminder;
-    const now = Date.now();
-    const delay = reminderTime - now;
-    
-    const timeoutId = setTimeout(() => {
-        const payload = JSON.stringify({
-            title: '!!! Напоминание',
-            body: text,
-            reminderId: id
-        });
-        subscriptions.forEach(sub => {
-            webpush.sendNotification(sub, payload).catch(err =>
-                console.error('Push error:', err));
-        });
-        reminders.delete(id);
-    }, delay);
-    reminders.set(id, { timeoutId, text, reminderTime });
-});
+        console.log('newReminder получена:', reminder);
+        const { id, text, reminderTime } = reminder;
+        const now = Date.now();
+        const delay = reminderTime - now;
+
+
+        if (delay <= 0) {
+            console.log('❌ Задержка <= 0, напоминание не будет установлено');
+            return;
+        }
+
+        const timeoutId = setTimeout(() => {
+            const payload = JSON.stringify({
+                title: '!!! Напоминание',
+                body: text,
+                reminderId: id
+            });
+            console.log('Отправляем push. Подписок:', subscriptions.length);
+            subscriptions.forEach(sub => {
+                webpush.sendNotification(sub, payload).catch(err =>
+                    console.error('Push error:', err));
+            });
+            reminders.delete(id);
+        }, delay);
+        reminders.set(id, { timeoutId, text, reminderTime });
+    });
 
     socket.on('disconnect', () => {
         console.log('Клиент отключён:', socket.id);
     });
-});
+}); // ← ЭТА СКОБКА ЗАКРЫВАЕТ io.on
 
 // Эндпоинты для управления push-подписками
 app.post('/subscribe', (req, res) => {
