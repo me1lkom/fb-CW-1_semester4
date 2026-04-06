@@ -34,7 +34,12 @@ function initNotes() {
 
     function loadNotes() {
         const notes = JSON.parse(localStorage.getItem('notes') || '[]');
-        list.innerHTML = notes.map(note => `<li>${note}</li>`).join('');
+        list.innerHTML = notes.map(note => {
+            if (typeof note === 'object') {
+                return `<li>${note.text}</li>`;
+            }
+            return `<li>${note}</li>`;
+        }).join('');
     }
 
     function addNote(text, datetime) {
@@ -136,11 +141,11 @@ async function subscribeToPush() {
     try {
         const registration = await navigator.serviceWorker.ready;
         const vapidKey = 'BOF9JdIvCpLC-LCl9aMeRXkAj0H82ALVkUwWrqznDf591H8trKF4EjrnqfRaL_TlQgsIOJZRWzb2OGRukzHQaGU';
-const convertedKey = urlBase64ToUint8Array(vapidKey);
-const subscription = await registration.pushManager.subscribe({
-    userVisibleOnly: true,
-    applicationServerKey: convertedKey
-});
+        const convertedKey = urlBase64ToUint8Array(vapidKey);
+        const subscription = await registration.pushManager.subscribe({
+            userVisibleOnly: true,
+            applicationServerKey: convertedKey
+        });
         await fetch('http://localhost:3001/subscribe', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
@@ -174,10 +179,10 @@ socket.on('taskAdded', (task) => {
     const notification = document.createElement('div');
     notification.textContent = `Новая задача: ${task.text}`;
     notification.style.cssText = `
-position: fixed; top: 10px; right: 10px;
-background: #4285f4; color: white; padding: 1rem;
-border-radius: 5px; z-index: 1000;
-`;
+    position: fixed; top: 10px; right: 10px;
+    background: #4285f4; color: white; padding: 1rem;
+    border-radius: 5px; z-index: 1000;
+    `;
     document.body.appendChild(notification);
     setTimeout(() => notification.remove(), 3000);
 });
