@@ -11,7 +11,6 @@ const sequelize = new Sequelize('practice19', 'levgerasimov', '', {
     dialect: 'postgres'
 });
 
-
 const User = sequelize.define('User', {
     id: {
         type: DataTypes.INTEGER,
@@ -34,12 +33,12 @@ const User = sequelize.define('User', {
     },
     created_at: {
         type: DataTypes.DATE,
-        defaultValue: Sequelize.literal('NOW()'),
+        defaultValue: Sequelize.NOW,
         field: 'created_at'
     },
     updated_at: {
         type: DataTypes.DATE,
-        defaultValue: Sequelize.literal('NOW()'),
+        defaultValue: Sequelize.NOW,
         field: 'updated_at'
     }
 }, {
@@ -55,11 +54,14 @@ sequelize.authenticate()
     .then(() => console.log('Таблице user синхронизирована'))
     .catch(err => console.log('Ошибка подключения', err));
 
-app.get('/', (req, res) => {
-    res.send('API работает');
-})
-
-
+app.get('/api/users', async (req, res) => {
+    try {
+        const users = await User.findAll();
+        res.json(users);
+    } catch (err) {
+        res.status(500).send(err.message);
+    }
+});
 
 app.post('/api/users', async (req, res) => {
     try {
@@ -70,18 +72,9 @@ app.post('/api/users', async (req, res) => {
             last_name,
             age
         });
-        res.status(201).json(user);
+        res.json(user);
     } catch (err) {
-        res.status(400).send(err.message);
-    }
-});
-
-app.get('/api/users', async (req, res) => {
-    try {
-        const users = await User.findAll();
-        res.json(users);
-    } catch (err) {
-        res.status(400).send(err.message);
+        res.status(500).send(err.message);
     }
 });
 
@@ -90,12 +83,12 @@ app.get('/api/users/:id', async (req, res) => {
         const user = await User.findByPk(req.params.id);
 
         if (!user) {
-            res.status(404).json({ message: 'Пользователь не найден' })
+            return res.status(404).json({ message: 'Пользователь не найден' })
         }
 
         res.json(user);
     } catch (err) {
-        res.status(400).send(err.message);
+        res.status(500).send(err.message);
     }
 });
 
@@ -113,9 +106,9 @@ app.patch('/api/users/:id', async (req, res) => {
             return res.status(404).json({ error: 'Пользователь не найден' });
         }
 
-        res.send(user);
+        res.json(user);
     } catch (err) {
-        res.status(400).send(err.message);
+        res.status(500).send(err.message);
     }
 });
 
@@ -129,11 +122,10 @@ app.delete('/api/users/:id', async (req, res) => {
 
         res.send({ message: 'Пользователь удален' });
     } catch (err) {
-        res.status(400).send(err.message);
+        res.status(500).send(err.message);
     }
 });
 
 app.listen(PORT, () => {
     console.log(`Сервер запущен на порту ${PORT}`);
 })
-

@@ -22,7 +22,6 @@ const userSchema = new mongoose.Schema({
     },
     age: {
         type: Number,
-        min: 18,
         required: true
     },
     created_at: {
@@ -35,17 +34,13 @@ const userSchema = new mongoose.Schema({
     }
 });
 
-const User = mongoose.model('User', userSchema);
-
-app.get('/', (req, res) => {
-    res.send('API работает');
-});
+const User = mongoose.model('user', userSchema);
 
 app.post('/api/users', async (req, res) => {
     try {
         const user = new User(req.body);
         await user.save();
-        res.status(201).send(user);
+        res.send(user);
     } catch (err) {
         res.status(400).send(err.message);
     }
@@ -54,7 +49,7 @@ app.post('/api/users', async (req, res) => {
 app.get('/api/users', async (req, res) => {
     try {
         const user = await User.find();
-        res.status(201).send(user);
+        res.send(user);
     } catch (err) {
         res.status(400).send(err.message);
     }
@@ -66,7 +61,7 @@ app.get('/api/users/:id', async (req, res) => {
 
         if (!user) return res.status(404).send('Пользователь не найден');
 
-        res.status(201).send(user);
+        res.send(user);
     } catch (err) {
         res.status(400).send(err.message);
     }
@@ -77,12 +72,12 @@ app.patch('/api/users/:id', async (req, res) => {
         const user = await User.findByIdAndUpdate(
             req.params.id,
             { ...req.body, updated_at: new Date() },
-            { new: true, runValidators: true }
+            { new: true }
         );
 
         if (!user) return res.status(404).send('Пользователь не найден');
-        
-        res.status(201).send(user);
+
+        res.send(user);
     } catch (err) {
         res.status(400).send(err.message);
     }
@@ -94,7 +89,7 @@ app.delete('/api/users/:id', async (req, res) => {
 
         if (!user) return res.status(404).send('Пользователь не найден');
 
-        res.status(201).send('Пользователь удален');
+        res.send('Пользователь удален');
     } catch (err) {
         res.status(400).send(err.message);
     }
