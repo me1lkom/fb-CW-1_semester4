@@ -10,6 +10,7 @@ const app = express();
 const port = 3000;
 
 const jwt = require('jsonwebtoken');
+const { createClient } = require('redis');
 const JWT_SECRET = 'access_secret';
 const ACCESS_EXPIRES_IN = '15m';
 
