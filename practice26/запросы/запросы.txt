@@ -1,0 +1,44 @@
+query getAllBook{
+  books {
+    title
+    author {
+      name
+    }
+  }
+}
+
+
+query getAllAuthor{
+  authors {
+    name
+    books {
+      title
+    }
+  }
+}
+
+
+query getBook {
+  book(id: "2") {
+    title
+    author {
+      name
+    }
+  }
+}
+
+
+mutation createAuthor{
+  createAuthor(name: "Алесандр Пушкин") {
+    id
+    name
+  }
+}
+
+
+mutation createBook{
+  createBook(title: "Дубровский", authorId: 4) {
+    id
+    title
+  }
+}
