@@ -15,9 +15,11 @@ export default function App() {
 
       <Routes>
         <Route path="/" element={<Home />} />
-        <Suspense fallback={<div>Загрузка...</div>}>
-          <Route path="/about" element={<About />} />
-        </Suspense>
+        <Route path="/about" element={
+          <Suspense fallback={<div>Загрузка...</div>}>
+            <About />
+          </Suspense>
+        } />
       </Routes>
     </BrowserRouter>
   );
